@@ -421,11 +421,12 @@ function handleMouseUp(event) {
 
 function handleMouseDown(event) {
             if (playerGo && !gameOver) {
-                const rect = canvas.getBoundingClientRect();
-                const x = event.clientX - rect.left;
-                const y = event.clientY - rect.top;
-                const col = Math.floor(x / imageSize);
-                const row = Math.floor(y / imageSize);
+    const rect = canvas.getBoundingClientRect();
+    const x = event.clientX - rect.left;
+    const y = event.clientY - rect.top;
+    const col = Math.floor(x / imageSize);
+    const row = Math.floor(y / imageSize);
+
 
                 if (row >= 0 && row < boardSize && col >= 0 && col < boardSize) {
                     const piece = board[row][col];
@@ -444,6 +445,8 @@ function handleMouseDown(event) {
 // ...
 
 function handleTouchStart(event) {
+    event.preventDefault(); // Prevent default touch behavior
+
     if (playerGo && !gameOver) {
         const touch = event.touches[0];
         const rect = canvas.getBoundingClientRect();
@@ -454,6 +457,8 @@ function handleTouchStart(event) {
 }
 
 function handleTouchMove(event) {
+    event.preventDefault(); // Prevent default touch behavior
+
     if (isDragging) {
         const touch = event.touches[0];
         const rect = canvas.getBoundingClientRect();
@@ -464,6 +469,8 @@ function handleTouchMove(event) {
 }
 
 function handleTouchEnd(event) {
+    event.preventDefault(); // Prevent default touch behavior
+
     if (isDragging) {
         const touch = event.changedTouches[0];
         const rect = canvas.getBoundingClientRect();
