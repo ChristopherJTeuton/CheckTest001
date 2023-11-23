@@ -441,6 +441,40 @@ function handleMouseDown(event) {
             }
 }
 
+// ...
+
+function handleTouchStart(event) {
+    if (playerGo && !gameOver) {
+        const touch = event.touches[0];
+        const rect = canvas.getBoundingClientRect();
+        const x = touch.clientX - rect.left;
+        const y = touch.clientY - rect.top;
+        handleMouseDown({ clientX: x, clientY: y });
+    }
+}
+
+function handleTouchMove(event) {
+    if (isDragging) {
+        const touch = event.touches[0];
+        const rect = canvas.getBoundingClientRect();
+        const x = touch.clientX - rect.left;
+        const y = touch.clientY - rect.top;
+        handleMouseMove({ clientX: x, clientY: y });
+    }
+}
+
+function handleTouchEnd(event) {
+    if (isDragging) {
+        const touch = event.changedTouches[0];
+        const rect = canvas.getBoundingClientRect();
+        const x = touch.clientX - rect.left;
+        const y = touch.clientY - rect.top;
+        handleMouseUp({ clientX: x, clientY: y });
+    }
+}
+
+// ...
+
 function mainGameLoop() {
     drawBoard();
     drawPieces();
@@ -453,6 +487,11 @@ function mainGameLoop() {
             canvas.addEventListener('mousedown', handleMouseDown);
             canvas.addEventListener('mousemove', handleMouseMove);
             canvas.addEventListener('mouseup', handleMouseUp);
+
+            // Add touch events for mobile
+            canvas.addEventListener('touchstart', handleTouchStart);
+            canvas.addEventListener('touchmove', handleTouchMove);
+            canvas.addEventListener('touchend', handleTouchEnd);
         }
     } else if (aiGo && !gameOver) {
         const movesAvailable = checkForAvailableMoves();
@@ -463,14 +502,22 @@ function mainGameLoop() {
             canvas.removeEventListener('mousemove', handleMouseMove);
             canvas.removeEventListener('mouseup', handleMouseUp);
 
+            // Remove touch events for mobile
+            canvas.removeEventListener('touchstart', handleTouchStart);
+            canvas.removeEventListener('touchmove', handleTouchMove);
+            canvas.removeEventListener('touchend', handleTouchEnd);
+
             aiTurn();
             playerGo = true;
             aiGo = false;
             gameInfo.textContent = 'Player\'s Turn';
-            setTimeout(mainGameLoop, 500); // Delay AI turn to make it visually clear
+            setTimeout(mainGameLoop, 500); // Delay AI turn for better visibility
         }
     }
 }
+
+// ...
+
 
 function endTurnWithNoMoves() {
     gameInfo.textContent = 'No Moves Available!';
