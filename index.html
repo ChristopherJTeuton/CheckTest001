@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        canvas {
+            border: 1px solid #000;
+        }
+        #gameInfo {
+            margin-top: 10px;
+        }
+        #replayButton {
+            margin-top: 10px;
+        }
+    </style>
+    <title>Check It!</title>
+</head>
+<body>
+    <canvas id="gameCanvas" width="800" height="600"></canvas>
+    <div id="gameInfo">Player's Turn</div>
+    <button id="replayButton" onclick="resetGame()">REPLAY GAME</button>
+    <script src="game.js"></script>
+</body>
+</html>
