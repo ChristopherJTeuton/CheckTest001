@@ -37,6 +37,28 @@ let isDragging = false;
 let dragOffsetX, dragOffsetY;
 let gameOver = false;
 
+function resizeCanvas() {
+    const aspectRatio = canvas.width / canvas.height;
+    const maxWidth = window.innerWidth;
+    const maxHeight = window.innerHeight;
+
+    let newWidth = maxWidth;
+    let newHeight = maxWidth / aspectRatio;
+
+    if (newHeight > maxHeight) {
+        newHeight = maxHeight;
+        newWidth = maxHeight * aspectRatio;
+    }
+
+    canvas.width = newWidth;
+    canvas.height = newHeight;
+
+    drawBoard();
+    drawPieces();
+}
+
+window.addEventListener('resize', resizeCanvas);
+
 function drawBoard() {
             for (let row = 0; row < boardSize; row++) {
                 for (let col = 0; col < boardSize; col++) {
@@ -534,6 +556,7 @@ function endTurnWithNoMoves() {
 
 
 document.addEventListener("DOMContentLoaded", function () {
+    resizeCanvas(); // Initial canvas resizing
     resetGame();
     mainGameLoop();
     replayButton.style.display = 'none';
